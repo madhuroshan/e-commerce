@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 import { ModalProvider } from "@/providers/modal-provider";
 
 import { Toaster } from "@/components/ui/sonner";
@@ -8,6 +14,9 @@ import { Toaster } from "@/components/ui/sonner";
 export const metadata: Metadata = {
   title: "Admin Dashboard",
   description: "Admin dashboard for managing your app",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -20,6 +29,12 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <ModalProvider />
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
           {children}
           <Toaster />
         </body>
